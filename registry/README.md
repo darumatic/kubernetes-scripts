@@ -3,15 +3,14 @@ Source: https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/regi
 # to install the registry 
 
 ```
-kubectl -f apply rc.yml
+#install the Docker registry
 kubectl apply -f rc.yml
 kubectl apply -f svc.yml
 kubectl apply -f ds.yml
-kubectl get pods
-kubectl get ds
-kubectl get ds --all-namespaces
-kubectl get svc --all-namespaces
-kubectl get rc --all-namespaces
+
+#verify that all the resources were created and are active
+kubectl get ds -n kube-system
+kubectl get pods -n kube-system
 ```
 
 # to use the registry from any machine 
