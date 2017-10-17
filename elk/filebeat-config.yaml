@@ -10,6 +10,7 @@ data:
     - input_type: log
       paths:
         - "/var/log/containers/*.log"
+        - "/var/lib/docker/devicemapper/mnt/*/rootfs/TFS/Logs/*"
       exclude_files: ['filebeat.*log','kube.*log']
       symlinks: true
       json.message_key: log
