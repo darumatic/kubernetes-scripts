@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  name: logstash
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: logstash
+    spec:
+      containers:
+#      - image: docker.elastic.co/logstash/logstash:5.6.2
+      - image: pschlesi/logstash:5.6.2.2      
+        name: logstash
+        ports:
+        - containerPort: 5044
+          name: beats
+          protocol: TCP     
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/share/logstash/pipeline
+          name: pipeline
+#        - mountPath: /etc/timezone
+#          subPath: timezone
+#          name: timezone
+        - mountPath: /usr/share/logstash/config/logstash.yml
+          subPath: logstash.yml
+          name: settings
+#        - mountPath: /usr/share/logstash/logbackups
+#          name: logbackups
+      restartPolicy: Always
+      volumes:
+      - name: pipeline
+        configMap:
+          name: logstash-pipeline
+          items:
+          - key: logstash.conf
+            path: logstash.conf
+      - name: settings
+        configMap:
+          name: logstash-settings
+          items:
+          - key: logstash.yml
+            path: logstash.yml
+      - name: timezone
+        configMap:
+          name: logstash-settings
+          items:
+          - key: timezone
+            path: timezone
+#      - name: logbackups
+#        persistentVolumeClaim:
+#          claimName: logbackups
+status: {}
+
