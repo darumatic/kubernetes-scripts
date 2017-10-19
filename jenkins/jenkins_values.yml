@@ -77,7 +77,7 @@ Master:
 Agent:
   Enabled: true
   Image: jenkinsci/jnlp-slave
-  ImageTag: latest
+  ImageTag: 2.62
   Component: "jenkins-slave"
   Privileged: false
   Cpu: "200m"
