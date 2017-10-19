@@ -1,4 +1,4 @@
-helm install --version 0.8.9 --set Persistence.Enabled=false --set Master.ServiceType=NodePort stable/jenkins
+helm install --name jenkins -f jenkins-values.yaml stable/jenkins
 
 
 NOTES:

@@ -10,7 +10,6 @@ data:
     - input_type: log
       paths:
         - "/var/log/containers/*.log"
-        - "/var/lib/docker/devicemapper/mnt/*/rootfs/TFS/Logs/*"
       exclude_files: ['filebeat.*log','kube.*log']
       symlinks: true
       json.message_key: log
@@ -19,6 +18,17 @@ data:
       multiline.pattern: '^\s'
       multiline.match: after
       document_type: kube-logs
+    - input_type: log
+      paths:
+        - "/var/lib/docker/devicemapper/mnt/*/rootfs/TFS/Logs/*"
+      exclude_files: ['filebeat.*log','kube.*log']
+      symlinks: true
+      json.message_key: log
+      json.keys_under_root: true
+      json.add_error_key: true
+      multiline.pattern: '^\s'
+      multiline.match: after
+      document_type: max-logs
 
     output.logstash:
         hosts: ["logstash:5044"]
