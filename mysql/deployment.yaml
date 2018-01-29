@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "mysqlicare"
+  labels:
+    app: "mysqlicare"
+spec:
+  selector:
+    matchLabels:
+      app: "mysqlicare"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "mysqlicare"
+    spec:
+      containers:
+        - name: "mysql"
+          image: "mysql:5.7.21"
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: "ddb"
+            - name: MYSQL_PASSWORD
+              value: "test_please_change"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "test_please_change"
+            - name: MYSQL_USER
+              value: "user1"
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysqlicare-data-volume
+      volumes:
+      - name: mysqlicare-data-volume
+        persistentVolumeClaim:
+          claimName: "mysqlicare-pvc"
