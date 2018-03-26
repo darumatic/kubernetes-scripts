@@ -1,4 +1,3 @@
-Source: https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/registry
 
 # to install the registry 
 
